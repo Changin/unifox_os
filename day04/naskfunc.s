@@ -71,7 +71,7 @@ io_store_eflags:
 		POPFD				; 스택에서 EFLAGS를 pop함
 		RET					; return
 
-; 현재는 알 필요가 없는 함수들
+; 현재는 알 필요가 없는 함수들 (5차시에 사용)
 
 load_gdtr:
 		MOV		AX, [ESP+4]

@@ -25,8 +25,7 @@ void boxfill8(char *vram, int xsize, unsigned char c, int x0, int y0, int x1, in
 #define COL8_008484		14
 #define COL8_848484		15
 
-void HariMain(void)
-{
+void Main(void)	{
 	char *vram;
 	int xsize, ysize;
 
@@ -57,37 +56,36 @@ void HariMain(void)
 	}
 }
 
-void init_palette(void)
-{
+void init_palette(void)	{
 	static unsigned char table_rgb[16 * 3] = {
-		0x00, 0x00, 0x00,	/*  0:�� */
-		0xff, 0x00, 0x00,	/*  1:���� ���� */
-		0x00, 0xff, 0x00,	/*  2:���� �ʷ� */
-		0xff, 0xff, 0x00,	/*  3:���� Ȳ�� */
-		0x00, 0x00, 0xff,	/*  4:���� �Ķ� */
-		0xff, 0x00, 0xff,	/*  5:���� ����� */
-		0x00, 0xff, 0xff,	/*  6:���� ���� */
-		0xff, 0xff, 0xff,	/*  7:��� */
-		0xc6, 0xc6, 0xc6,	/*  8:���� ȸ�� */
-		0x84, 0x00, 0x00,	/*  9:��ο� ���� */
-		0x00, 0x84, 0x00,	/* 10:��ο� �ʷ� */
-		0x84, 0x84, 0x00,	/* 11:��ο� Ȳ�� */
-		0x00, 0x00, 0x84,	/* 12:��ο� �Ķ� */
-		0x84, 0x00, 0x84,	/* 13:��ο� ����� */
-		0x00, 0x84, 0x84,	/* 14:��ο� ���� */
-		0x84, 0x84, 0x84	/* 15:��ο� ȸ�� */
+		0x00, 0x00, 0x00,	//  0: 검정
+		0xff, 0x00, 0x00,	//  1: 밝은 빨강
+		0x00, 0xff, 0x00,	//  2: 밝은 초록
+		0xff, 0xff, 0x00,	//  3: 밝은 노랑
+		0x00, 0x00, 0xff,	//  4: 밝은 파랑
+		0xff, 0x00, 0xff,	//  5: 밝은 보라
+		0x00, 0xff, 0xff,	//  6: 밝은 하늘
+		0xff, 0xff, 0xff,	//  7: 하양
+		0xc6, 0xc6, 0xc6,	//  8: 밝은 회색
+		0x84, 0x00, 0x00,	//  9: 어두운 빨강
+		0x00, 0x84, 0x00,	// 10: 어두운 초록
+		0x84, 0x84, 0x00,	// 11: 어두운 노랑
+		0x00, 0x00, 0x84,	// 12: 어두운 파랑
+		0x84, 0x00, 0x84,	// 13: 어두운 보라
+		0x00, 0x84, 0x84,	// 14: 어두운 하늘
+		0x84, 0x84, 0x84	// 15: 어두운 회색
 	};
-	set_palette(0, 15, table_rgb);
-	return;
 
-	/* static char ����� ������ �ۿ� ����� �� ������ DB��ɿ� ��� */
+	set_palette(0, 15, table_rgb);
+
+	return;
 }
 
-void set_palette(int start, int end, unsigned char *rgb)
-{
+void set_palette(int start, int end, unsigned char *rgb)	{
 	int i, eflags;
-	eflags = io_load_eflags();	/* ���ͷ�Ʈ �㰡 �÷����� ���� ����Ѵ� */
-	io_cli(); 			/* �㰡 �÷��׸� 0���� �Ͽ� ���ͷ�Ʈ ������ �Ѵ� */
+
+	eflags = io_load_eflags();
+	io_cli();
 	io_out8(0x03c8, start);
 	for (i = start; i <= end; i++) {
 		io_out8(0x03c9, rgb[0] / 4);
@@ -95,16 +93,18 @@ void set_palette(int start, int end, unsigned char *rgb)
 		io_out8(0x03c9, rgb[2] / 4);
 		rgb += 3;
 	}
-	io_store_eflags(eflags);	/* ���ͷ�Ʈ �㰡 �÷��׸� ������� �ǵ����� */
+
+	io_store_eflags(eflags);
 	return;
 }
 
-void boxfill8(char *vram, int xsize, unsigned char c, int x0, int y0, int x1, int y1)
-{
+void boxfill8(char *vram, int xsize, unsigned char c, int x0, int y0, int x1, int y1)	{
 	int x, y;
+
 	for (y = y0; y <= y1; y++) {
 		for (x = x0; x <= x1; x++)
 			vram[y * xsize + x] = c;
 	}
+	
 	return;
 }
