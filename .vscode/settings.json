@@ -1,7 +1,0 @@
-{
-    "files.associations": {
-        "fifo.h": "c",
-        "kernel.h": "c",
-        "graphic.h": "c"
-    }
-}
